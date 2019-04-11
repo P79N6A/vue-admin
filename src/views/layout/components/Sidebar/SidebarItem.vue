@@ -27,7 +27,6 @@
 
 <script>
 import path from 'path'
-import { isExternal } from '@/utils/validate'
 import Item from './Item'
 import AppLink from './Link'
 
@@ -81,9 +80,6 @@ export default {
       return false
     },
     resolvePath(routePath) {
-      if (isExternal(routePath)) {
-        return routePath
-      }
       return path.resolve(this.basePath, routePath)
     }
   }
