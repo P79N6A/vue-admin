@@ -27,27 +27,39 @@ export const constantRouterMap = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
-    name: 'Dashboard',
+    redirect: '/home',
+    name: 'Home',
     hidden: true,
     children: [{
-      path: 'dashboard',
-      component: () => import('@/views/dashboard/index')
+      path: 'home',
+      component: () => import('@/views/home/index')
     }]
   },
 
   {
-    path: '/form',
+    path: '/quality',
     component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
+      redirect: '/quality/form',
+      name: 'Quality',
+      meta: { title: '质量', icon: 'example' },
+      children: [
+          {
+              path: 'test',
+              name: 'test',
+              component: () => import('@/views/test/index'),
+      meta: { title: '测试', icon: 'nested' }
   },
+          {
+              path: 'form',
+              name: 'Form',
+              component: () => import('@/views/form/index'),
+      meta: { title: '表单', icon: 'nested' }
+  }
+     
+  ]
+  },
+
+
   {
     path: '/demo',
     component: Layout,
@@ -55,11 +67,25 @@ export const constantRouterMap = [
       {
         path: '/hello',
         name: 'Demo',
-        component: () => import('@/views/demo/demo'),
-        meta: { title: 'Demo', icon: 'form' }
+        component: () => import('@/views/demo/index'),
+        meta: { title: '软色情', icon: 'example' }
       }
     ]
   },
+
+{
+    path: '/label',
+        component: Layout,
+    children: [
+    {
+        path: '/labeltest',
+        name: 'Label',
+        component: () => import('@/views/label/index'),
+    meta: { title: '标签', icon: 'example' }
+}
+]
+},
+
   { path: '*', redirect: '/404', hidden: true }
 ]
 

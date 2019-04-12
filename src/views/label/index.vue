@@ -1,7 +1,7 @@
 <template>
-  <div class="demo-container">
-    demo
-  </div>
+    <div class="demo-container">
+        标签
+    </div>
 </template>
 
 <script>
