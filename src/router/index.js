@@ -39,7 +39,7 @@ export const constantRouterMap = [
   {
     path: '/quality',
     component: Layout,
-      redirect: '/quality/form',
+      redirect: '/quality/test',
       name: 'Quality',
       meta: { title: '质量', icon: 'example' },
       children: [
