@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="background-color: #f0fcff">
         <Input/>
         <Buttom/>
         <Date/>

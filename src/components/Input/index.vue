@@ -1,33 +1,16 @@
 <template>
 
-<!--        <section class="content bgcolor-1">
-
-        <span class="input input&#45;&#45;haruki">
-					<input class="input__field input__field&#45;&#45;haruki" type="text" id="input-1" />
-					<label class="input__label input__label&#45;&#45;haruki" for="input-1">
-						<span class="input__label-content input__label-content&#45;&#45;haruki">标题</span>
-					</label>
-				</span>
-            <span class="input input&#45;&#45;haruki">
-					<input class="input__field input__field&#45;&#45;haruki" type="text" id="input-2" />
-					<label class="input__label input__label&#45;&#45;haruki" for="input-2">
-						<span class="input__label-content input__label-content&#45;&#45;haruki">URL</span>
-					</label>
-				</span>
-        </section>-->
-
-
     <section class="content">
-				<span class="input input--hoshi">
-					<input class="input__field input__field--hoshi" type="text" id="input-4" />
-					<label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-4">
-						<span class="input__label-content input__label-content--hoshi">标题</span>
+				<span class="input input--isao">
+					<input class="input__field input__field--isao" type="text" id="input-38" />
+					<label class="input__label input__label--isao" for="input-38" data-content="title">
+						<span class="input__label-content input__label-content--isao">title</span>
 					</label>
 				</span>
-        <span class="input input--hoshi">
-					<input class="input__field input__field--hoshi" type="text" id="input-5" />
-					<label class="input__label input__label--hoshi input__label--hoshi-color-2" for="input-5">
-						<span class="input__label-content input__label-content--hoshi">URL</span>
+        <span class="input input--isao">
+					<input class="input__field input__field--isao" type="text" id="input-39" />
+					<label class="input__label input__label--isao" for="input-39" data-content="url">
+						<span class="input__label-content input__label-content--isao">url</span>
 					</label>
 				</span>
     </section>
@@ -39,134 +22,15 @@
         name:'Input'
     }
 
+
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 
-    /*.content {
-        font-size: 100%;
-        padding: 1em 0;
-        text-align: center;
-    }
-    !*.bgcolor-1 { background:#e0ddd9; }*!
-    .input {
-        position: relative;
-        z-index: 1;
-        display: inline-block;
-        margin: 1em;
-        max-width: 370px;
-        width: calc(100% - 2em);
-        vertical-align: top;
-    }
-    .input--haruki {
-        margin: 4em 1em 1em;
-    }
-    .input__field {
-        position: relative;
-        display: block;
-        float: right;
-        padding: 0.8em;
-        width: 60%;
-        border: none;
-        border-radius: 0;
-        background: #f0f0f0;
-        color: #aaa;
-        font-weight: bold;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        -webkit-appearance: none; !* for box shadows to show on iOS *!
-    }
-    .input__field:focus {
-        outline: none;
-    }
-    .input__label {
-        display: inline-block;
-        float: right;
-        padding: 0 1em;
-        width: 40%;
-        color: #6a7989;
-        font-weight: bold;
-        font-size: 70.25%;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
-    .input__label-content {
-        position: relative;
-        display: block;
-        padding: 1.6em 0;
-        width: 100%;
-    }
-    .input--haruki {
-        margin: 4em 1em 1em;
-    }
-
-    .input__field--haruki {
-        padding: 0.4em 0.25em;
-        width: 100%;
-        background: transparent;
-        color: #AFB5BB;
-        font-size: 1.55em;
-    }
-
-    .input__label--haruki {
-        position: absolute;
-        width: 100%;
-        text-align: left;
-        pointer-events: none;
-    }
-
-    .input__label-content--haruki {
-        -webkit-transition: -webkit-transform 0.3s;
-        transition: transform 0.3s;
-    }
-
-    .input__label--haruki::before,
-    .input__label--haruki::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        z-index: -1;
-        width: 100%;
-        height: 4px;
-        background: #6a7989;
-        -webkit-transition: -webkit-transform 0.3s;
-        transition: transform 0.3s;
-    }
-
-    .input__label--haruki::before {
-        top: 0;
-    }
-
-    .input__label--haruki::after {
-        bottom: 0;
-    }
-
-    .input__field--haruki:focus + .input__label--haruki .input__label-content--haruki,
-    .input--filled .input__label-content--haruki {
-        -webkit-transform: translate3d(0, -90%, 0);
-        transform: translate3d(0, -90%, 0);
-    }
-
-    .input__field--haruki:focus + .input__label--haruki::before,
-    .input--filled .input__label--haruki::before {
-        -webkit-transform: translate3d(0, -0.5em, 0);
-        transform: translate3d(0, -0.5em, 0);
-    }
-
-    .input__field--haruki:focus + .input__label--haruki::after,
-    .input--filled .input__label--haruki::after {
-        -webkit-transform: translate3d(0, 0.5em, 0);
-        transform: translate3d(0, 0.5em, 0);
-    }
-*/
 
     .content {
         font-size: 150%;
-        padding: 0.1em 0;
+        padding: 1.5em 0;
         text-align: center;
     }
     .input {
@@ -220,108 +84,87 @@
         padding: 1.6em 0;
         width: 100%;
     }
-    .input--hoshi {
-        overflow: hidden;
-    }
 
-    .input__field--hoshi {
-        margin-top: 1em;
-        padding: 0.85em 0.15em;
+    .input__field--isao {
+        z-index: 10;
+        padding: 0.75em 0.1em 0.25em;
         width: 100%;
         background: transparent;
-        color: #595F6E;
+        color: #263445;
     }
 
-    .input__label--hoshi {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        padding: 0 0.25em;
+    .input__label--isao {
+        position: relative;
+        overflow: hidden;
+        padding: 0;
         width: 100%;
-        height: calc(100% - 1em);
+        color: #4a5775;
         text-align: left;
-        pointer-events: none;
+        font-size: 25px;
     }
 
-    .input__label-content--hoshi {
-        position: absolute;
-    }
-
-    .input__label--hoshi::before,
-    .input__label--hoshi::after {
+    .input__label--isao::before {
         content: '';
         position: absolute;
         top: 0;
-        left: 0;
         width: 100%;
-        height: calc(100% - 10px);
-        border-bottom: 1px solid #B9C1CA;
+        height: 7px;
+        background: #dadada;
+        -webkit-transform: scale3d(1, 0.4, 1);
+        transform: scale3d(1, 0.4, 1);
+        -webkit-transform-origin: 50% 100%;
+        transform-origin: 50% 100%;
+        -webkit-transition: -webkit-transform 0.3s, background-color 0.3s;
+        transition: transform 0.3s, background-color 0.3s;
+        -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+        transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
     }
 
-    .input__label--hoshi::after {
-        margin-top: 2px;
-        border-bottom: 4px solid red;
-        -webkit-transform: translate3d(-100%, 0, 0);
-        transform: translate3d(-100%, 0, 0);
-        -webkit-transition: -webkit-transform 0.3s;
-        transition: transform 0.3s;
+    .input__label--isao::after {
+        content: attr(data-content);
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 0.75em 0.15em;
+        color: #da7071;
+        opacity: 0;
+        -webkit-transform: translate3d(0, 50%, 0);
+        transform: translate3d(0, 50%, 0);
+        -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+        transition: opacity 0.3s, transform 0.3s;
+        -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+        transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+        pointer-events: none;
     }
 
-    .input__label--hoshi-color-1::after {
-        border-color: hsl(200, 100%, 50%);
+    .input__field--isao:focus + .input__label--isao::before {
+        background-color: #da7071;
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
     }
 
-    .input__label--hoshi-color-2::after {
-        border-color: hsl(160, 100%, 50%);
+    .input__field--isao:focus + .input__label--isao {
+        pointer-events: none;
     }
 
-    .input__field--hoshi:focus + .input__label--hoshi::after,
-    .input--filled .input__label--hoshi::after {
+    .input__field--isao:focus + .input__label--isao::after {
+        opacity: 1;
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
     }
 
-    .input__field--hoshi:focus + .input__label--hoshi .input__label-content--hoshi,
-    .input--filled .input__label-content--hoshi {
-        -webkit-animation: anim-1 0.3s forwards;
-        animation: anim-1 0.3s forwards;
+    .input__label-content--isao {
+        padding: 0.75em 0.15em;
+        -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+        transition: opacity 0.3s, transform 0.3s;
+        -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+        transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
     }
 
-    @-webkit-keyframes anim-1 {
-        50% {
-            opacity: 0;
-            -webkit-transform: translate3d(1em, 0, 0);
-            transform: translate3d(1em, 0, 0);
-        }
-        51% {
-            opacity: 0;
-            -webkit-transform: translate3d(-1em, -40%, 0);
-            transform: translate3d(-1em, -40%, 0);
-        }
-        100% {
-            opacity: 1;
-            -webkit-transform: translate3d(0, -40%, 0);
-            transform: translate3d(0, -40%, 0);
-        }
+    .input__field--isao:focus + .input__label--isao .input__label-content--isao {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -50%, 0);
+        transform: translate3d(0, -50%, 0);
     }
-
-    @keyframes anim-1 {
-        50% {
-            opacity: 0;
-            -webkit-transform: translate3d(1em, 0, 0);
-            transform: translate3d(1em, 0, 0);
-        }
-        51% {
-            opacity: 0;
-            -webkit-transform: translate3d(-1em, -40%, 0);
-            transform: translate3d(-1em, -40%, 0);
-        }
-        100% {
-            opacity: 1;
-            -webkit-transform: translate3d(0, -40%, 0);
-            transform: translate3d(0, -40%, 0);
-        }
-    }
-
 
 </style>

@@ -1,17 +1,19 @@
 <template>
     <div class="date">
-    <img src="http://img.pconline.com.cn/images/upload/upc/tx/itbbs/1312/01/c4/29178578_1385863150056.jpg" width="550" height="330">
-    <article>
-        <header style="text-align: center"><h1>结果</h1></header>
-        <br>
-        <section>
-            <h2 style="text-align: center">score:0.9</h2>
-        </section>
-        <br>
-        <section>
-            <h2 style="text-align: center">label:view</h2>
-        </section>
-    </article>
+    <img src="./1.jpg" width="550" height="330">
+        <div class="float-right">
+            <div class="table ">
+                <div class="table-header">
+                    <div class="table-title">result</div>
+                </div>
+                <div class="table-content-holder">
+                    <ul>
+                        <li>score:0.9</li>
+                        <li>label:view</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -23,30 +25,68 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 
-.date{
-    padding: 20px 90px;
-}
+
 img{
     float: left;
     padding: 10px 10px 15px 10px;
     background: #bbc0ce;
     border: 1px solid #040404;
     position: absolute;
-    -webkit-transition: 1s;
-    -moz-transition: 1s;
-    transition: 1s;
     z-index: 1;
+    margin-left: 10%;
+    margin-top: 50px;
 }
 
-article{
-        float: right;
-        padding: 10px 10px 15px 10px;
-        background: #eceef5;
-        border: 1px solid #040404;
-        width: 200px;
-        height: 330px;
-        border-radius: 10%;
+.float-right{
+    height: 400px;
+    margin-left: 600px;
+    position: relative;
+}
 
+.table{
+    position: absolute;
+    text-align: center;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px 3px #ede9f3;
+    top: 20%;
+    left: 35%;
+}
+
+
+.table-header{
+    height: 80px;
+    width: 280px;
+    position: relative;
+    background-color: #bbc0ce;
+}
+.table-title{
+    position: absolute;
+    width: 60px;
+    height: 20px;
+    top:50%;
+    left: 50%;
+    margin-top:-10px;
+    margin-left:-30px;
+    font-size:25px;
+}
+.table-content-holder{
+    padding: 0 10%;
+    margin-bottom: 40px;
+}
+.table ul
+{
+    padding: 0;
+    list-style: none;
+    margin-top: 25px;
+}
+.table ul li
+{
+    border-bottom: 2px solid #ede9f3;
+    padding: 12px 0;
+    font-weight: 500;
 }
 
 </style>
+
