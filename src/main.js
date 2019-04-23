@@ -13,6 +13,12 @@ import store from './store'
 import router from './router'
 
 import '@/icons' // icon
+//引入vue-sweetalert2提示框
+import VueSweetalert2 from 'vue-sweetalert2';
+const options = {
+    confirmButtonColor: '#87CEFA',
+    cancelButtonColor: '#ff7674'
+}
 
 /**
  * This project originally used easy-mock to simulate data,
@@ -25,6 +31,7 @@ import '@/icons' // icon
 import '../mock' // simulation data
 
 Vue.use(ElementUI, { locale })
+Vue.use(VueSweetalert2, options)
 
 Vue.config.productionTip = false
 

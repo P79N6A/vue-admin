@@ -1,7 +1,7 @@
 <template>
         <div class="container">
             <img src="@/assets/img/bg1.jpg">
-            <div class="image"><img src="@/assets/img/1.jpeg"></div>
+            <div class="image"><img src="@/assets/img/AI.jpeg"></div>
             <div class="top">用数据改变未来</div>
         </div>
 </template>
