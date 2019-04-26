@@ -26,14 +26,23 @@
         </form>
 
         <!--结果显示部分-->
-        <div style="display:flex;" v-show="false" >
+        <div class="father">
+            <!--左边div包括title，图片以及video展示-->
             <div class="left">
+                <div class="left_title" v-show="title_value">
+                    <div class="input_title">title:XXXXXXXXXXXXXXXX</div>
+                </div>
+                <div class="left_img" v-show="img_value">
                 <img src = "@/assets/img/1.jpg" class="img1">
+                </div>
+                <div class="left_video" v-show="video_value">
+                    这里是video
+                </div>
             </div>
-            <div class="middle">
-                <img src="@/assets/img/arrow.png" width="200" height="50" class="img2">
+            <div class="middle" v-show="arrow_value">
+                <img src="@/assets/img/arrow.png" width="200" height="50" class="arrow">
             </div>
-            <div class="right">
+            <div class="right" v-show="table_value">
                 <div class="table">
                     <div class="table-header">
                         <div class="table-title">result</div>
@@ -62,7 +71,7 @@
             <div class="dis">请输入title、img_url以及video_url至少一项</div>
         </modal>
         <!--页脚装饰部分-->
-        <!--<div class="horizontalline"><img src="@/assets/img/round.png" style="width: 100%;height: 100%"></div>-->
+        <div class="horizontalline"><img src="@/assets/img/horizontalline.png"></div>
    </div>
 </template>
 
@@ -77,7 +86,12 @@
                 note:{
                     //添加背景图片
                     backgroundImage: "url(" + require("@/assets/img/bg2.jpg") + ") ",
-                }
+                },
+                title_value:false,
+                img_value:false,
+                video_value:false,
+                arrow_value:false,
+                table_value:false
             }
         },
         methods:{
@@ -112,7 +126,38 @@
                 console.log(img_url);
                 console.log(video_url);
 
-
+//                判断输入哪些内容，渲染不同的效果
+                this.arrow_value = true;
+                this.table_value = true;
+                if (title&img_url&video_url){
+                    this.title_value = true;
+                    this.img_value = true;
+                    this.video_value = true;
+                }else if(title&img_url){
+                    this.title_value = true;
+                    this.img_value = true;
+                    this.video_value = false;
+                }else if(img_url&video_url){
+                    this.title_value = false;
+                    this.img_value = true;
+                    this.video_value = true;
+                }else if(title&video_url){
+                    this.title_value = true;
+                    this.img_value = false;
+                    this.video_value = true;
+                }else if(title){
+                    this.title_value = true;
+                    this.img_value = false;
+                    this.video_value = false;
+                }else if(img_url){
+                    this.title_value = false;
+                    this.img_value = true;
+                    this.video_value = false;
+                }else if(video_url){
+                    this.title_value = false;
+                    this.img_value = false;
+                    this.video_value = true;
+                }
 
                 //点击提交按钮之后，清空输入框数据
 //                this.title = " ";
@@ -275,11 +320,6 @@ header{
     transform: translate3d(0, -50%, 0);
 }
 
-#wrapper {
-    padding:20px 0;
-    width:600px;
-    margin:0 auto;
-}
 
 input {
     margin:0 auto;
@@ -314,10 +354,37 @@ input#button1:active {
     background:-webkit-gradient(linear, left bottom, left top, from(#606c88), to(#3f4c6b));
     text-shadow:0px 0px 2px #000;
 }
-/*当输入有img_url时，结果样式*/
+/*结果显示部分样式，最右边div宽度自适应，整个div高度自适应*/
+.father{
+    display: flex;
+}
 .left{
     width: 53%;
-    height: 400px;
+}
+.left_title{
+    width: auto;
+    height: 80px;
+    position: relative;
+}
+.input_title{
+    position: absolute;
+    width: 550px;
+    height: 60px;
+    background-color: #d4dfe6;
+    color: #121647;
+    text-align: center;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 60px;
+    top:50%;
+    left:50%;
+    margin-left: -275px;
+    margin-top: -30px;
+    border-radius: 5px;
+}
+.left_img{
+    width: auto;
+    height: 380px;
     position: relative;
 }
 .img1{
@@ -325,21 +392,26 @@ input#button1:active {
     width: 550px;
     height: 330px;
     padding: 10px 10px 10px 10px;
-    background: #bbc0ce;
+    background: #cadbe9;
     border: 1px solid #040404;
     z-index: 1;
     top:50%;
     left:50%;
-    margin-left: -280px;
+    margin-left: -275px;
     margin-top: -175px;
 
 }
+.left_video{
+    width: auto;
+    height: 600px;
+    background-color: #7f7f7f;
+}
+
 .middle{
-    height: 400px;
     width: 18%;
     position: relative;
 }
-.img2{
+.arrow{
     position: absolute;
     z-index: 1;
     top:50%;
@@ -348,10 +420,8 @@ input#button1:active {
     margin-top: -25px;
 }
 
-
 .right{
     flex: 1;
-    height: 400px;
     position: relative;
 }
 
@@ -428,15 +498,11 @@ input#button1:active {
     color: #696969;
 }
 /*页脚装饰*/
-/*.horizontalline{
+.horizontalline{
     position: fixed;
     top: 90%;
-    !*right: 0%;*!
-    left: 40%;
-    width: 80px;
-    height: 80px;
-    !*background-color: red;*!
+    right: 0%;
 
-}*/
+}
 </style>
 
