@@ -37,27 +37,15 @@ export const constantRouterMap = [
   },
 
   {
-    path: '/quality',
-    component: Layout,
-      redirect: '/quality/test',
-      name: 'Quality',
-      meta: { title: '质量', icon: 'example' },
-      children: [
-          {
-              path: 'test',
-              name: 'test',
-              component: () => import('@/views/test/index'),
-      meta: { title: '测试', icon: 'nested' }
-  },
-          {
-              path: 'form',
-              name: 'Form',
-              component: () => import('@/views/form/index'),
-      meta: { title: '表单', icon: 'nested' }
-  }
-     
-  ]
-  },
+    path: '/softporn',
+      component: Layout,
+      children: [{
+              path: '/softporn',
+              name: 'Softporn',
+              component: () => import('@/views/softporn/index'),
+              meta: { title: '软色情', icon: 'example' },
+  }]
+},
 
 
   {
@@ -68,20 +56,20 @@ export const constantRouterMap = [
         path: '/hello',
         name: 'Demo',
         component: () => import('@/views/demo/index'),
-        meta: { title: '软色情', icon: 'example' }
+        meta: { title: '标签', icon: 'example' }
       }
     ]
   },
 
 {
     path: '/label',
-        component: Layout,
+    component: Layout,
     children: [
     {
         path: '/labeltest',
         name: 'Label',
         component: () => import('@/views/label/index'),
-    meta: { title: '标签', icon: 'example' }
+    meta: { title: '质量', icon: 'example' }
 }
 ]
 },
@@ -90,7 +78,7 @@ export const constantRouterMap = [
 ]
 
 export default new Router({
-  // mode: 'history', //后端支持可开
+  mode: 'history', //后端支持可开
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })

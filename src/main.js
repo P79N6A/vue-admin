@@ -19,7 +19,8 @@ const options = {
     confirmButtonColor: '#87CEFA',
     cancelButtonColor: '#ff7674'
 }
-
+//引入vue-js-modal模态框
+import VModal from  'vue-js-modal'
 /**
  * This project originally used easy-mock to simulate data,
  * but its official service is very unstable,
@@ -32,7 +33,7 @@ import '../mock' // simulation data
 
 Vue.use(ElementUI, { locale })
 Vue.use(VueSweetalert2, options)
-
+Vue.use(VModal)
 Vue.config.productionTip = false
 
 new Vue({

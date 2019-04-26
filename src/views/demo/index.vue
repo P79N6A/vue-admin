@@ -1,6 +1,6 @@
 <template>
 <div>
-    软色情
+    标签
 </div>
 </template>
 

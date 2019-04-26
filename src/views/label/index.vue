@@ -1,6 +1,6 @@
 <template>
     <div class="demo-container">
-        标签
+        质量
     </div>
 </template>
 

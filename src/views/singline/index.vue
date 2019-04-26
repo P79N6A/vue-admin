@@ -1,31 +1,24 @@
 <template>
     <div class="main" :style ="note">
-        <!--页面头部-->
-        <header><img src="@/assets/img/2.png"></header>
-        <!--输入框部分-->
+        <!--页面header部分-->
+    <header><img src="@/assets/img/2.png"></header>
+        <!--页面表单部分-->
         <form class="content">
-			<span class="input input--isao">
-					<input class="input__field input__field--isao" type="text" id="input-38" name ="title" v-model="title"/>
-					<label class="input__label input__label--isao" for="input-38" data-content="title" >
-						<span class="input__label-content input__label-content--isao">title</span>
+            <span class="input input--isao">
+					<input class="input__field input__field--isao" type="text" id="input-38" name ="input" v-model="input"/>
+					<label class="input__label input__label--isao" for="input-38" data-content="input" >
+						<span class="input__label-content input__label-content--isao">input</span>
 					</label>
 			</span>
-            <span class="input input--isao">
-					<input class="input__field input__field--isao" type="text" id="input-39" name = 'url' v-model="url"/>
-					<label class="input__label input__label--isao" for="input-39" data-content="url" >
-						<span class="input__label-content input__label-content--isao">url</span>
-					</label>
-            </span>
             <input type="submit" id="button1" value="提交" @click="submitForm"/>
         </form>
-
-        <!--结果显示部分-->
-        <div style="display:flex; " v-show="value">
+        <!--当输入为img_url时，页面结果部分,value1控制显示与否-->
+        <div style="display:flex; " v-show="value1">
             <div class="left">
                 <img src = "@/assets/img/1.jpg" class="img1">
             </div>
             <div class="middle">
-                <img src="@/assets/img/arrow.png" width="200" height="50" class="img2">
+                <img src="@/assets/img/arrow.png" width="200" height="50" class="arrow">
             </div>
             <div class="right">
                 <div class="table">
@@ -41,84 +34,115 @@
                 </div>
             </div>
         </div>
-   </div>
+        <!--当输入为title或者是video_url时，页面显示的部分，value2控制显示与否-->
+        <div v-show="value2">
+            <div class="vertical-middle">
+                <img src="@/assets/img/arrowunder.png" width="50px" height="200px" class="arrowunder">
+            </div>
+            <div class="vertical-buttom">
+                <div class="table1">
+                    <div class="table-header1">
+                        <div class="table-title1">result</div>
+                    </div>
+                    <div class="table-content-holder1">
+                        <ul>
+                            <li>score:0.9</li>
+                            <li>label:view</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--模态框部分-->
+        <!--问号图标-->
+        <div class="modalicon" @click="show">
+            <i class="el-icon-question" style="font-size: 57px;color: #87CEFA;"></i>
+        </div>
+        <!--定义模态框内容-->
+        <modal name="description" :draggable="true" :adaptive="true">
+            <!--隐藏模态框图标置于右上角-->
+            <div slot="top-right">
+                <i class="el-icon-error" style="font-size: 60px;color:#FF0000;" @click="hide"></i>
+            </div>
+            <div class="distitle">输入说明</div>
+            <div class="dis">请输入title或者img_url或者video_url</div>
+        </modal>
+        <!--页脚装饰部分-->
+        <div class="horizontalline"><img src="@/assets/img/horizontalline.png"></div>
+    </div>
 </template>
 
-<script src="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.js"></script>
 <script>
-
-    export default{
-        data(){
-            return{
-                title: '',
-                url: '',
-                note:{
-                    //添加背景图片
-                    backgroundImage: "url(" + require("@/assets/img/bg2.jpg") + ") ",
-                },
-                //value控制结果显示
-                value:false
-
-            }
+export default {
+    data(){
+        return{
+            note:{
+                //添加背景图片
+                backgroundImage: "url(" + require("@/assets/img/bg2.jpg") + ") ",
+            },
+            value1:false,
+            value2:false,
+        }
+    },
+    methods:{
+        //警告框
+        showAlert(){
+            this.$swal('请输入!');
         },
-        methods:{
-            //输入标题警告框
-            showAlerttitle(){
-                this.$swal('请输入标题!');
-            },
-            //输入url警告框
-            showAlerturl(){
-                this.$swal('请输入url!');
-            },
-            submitForm(e){
-                var title = this.title;
-                var url = this.url;
+        //弹出模态框方法
+        show(){
+          this.$modal.show('description');
+        },
+        //隐藏模态框方法
+        hide(){
+          this.$modal.hide('description');
+        },
+        //点击提交按钮
+        submitForm(e){
 
-                console.log(title);
-                console.log(url);
+            // 阻止页面刷新,取消默认行为
+            e.preventDefault();
 
-                // 阻止页面刷新,取消默认行为
-                e.preventDefault();
-
-                //验证表单数据是否为空
-                if(!title){
-                    this.showAlerttitle();
-                    return false;
-                }
-
-                if(!url){
-                    this.showAlerturl();
-                    return false;
-                }
-
-
-
-                //点击提交按钮之后，显示结果
-                this.value = true;
-
-                //点击提交按钮之后，清空输入框数据
-                this.title = " ";
-                this.url = " ";
+            var input = this.input;
+            //当输入为空时，提醒输入
+            if(!input){
+                this.showAlert();
+                return false;
             }
+            //如果输入以.jpg结尾，将图片以及结果显示出来
+            if(input.endsWith('.jpg')){
+                this.value1 = true;
+                this.value2 = false;
+            }else {
+                this.value2 = true;
+                this.value1 = false;
+            }
+
+            console.log(input);
+            console.log(typeof input);
+
+
         }
     }
-
+}
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style scoped>
+    /*全部页面样式*/
 .main{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    overflow:auto;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        overflow:auto;
 }
 header{
     width: 100%;
     height: 40px;
 }
+/*表单部分样式*/
 .content {
     font-size: 150%;
-    padding: 1.5em 0;
+    padding: 1em 0;
     text-align: center;
 }
 .input {
@@ -188,7 +212,7 @@ header{
     width: 100%;
     color: #dadada;
     text-align: left;
-    font-size: 25px;
+    font-size: 30px;
 }
 
 .input__label--isao::before {
@@ -255,17 +279,10 @@ header{
     transform: translate3d(0, -50%, 0);
 }
 
-#wrapper {
-    padding:20px 0;
-    width:600px;
-    margin:0 auto;
-}
-
-input {
+/*按钮样式*/
+input#button1 {
     margin:0 auto;
     display:block;
-}
-input#button1 {
     /* General Propertoes */
     height:35px;
     width:200px;
@@ -294,6 +311,7 @@ input#button1:active {
     background:-webkit-gradient(linear, left bottom, left top, from(#606c88), to(#3f4c6b));
     text-shadow:0px 0px 2px #000;
 }
+/*当输入为img_url时，结果样式*/
 .left{
     width: 53%;
     height: 400px;
@@ -318,7 +336,7 @@ input#button1:active {
     width: 18%;
     position: relative;
 }
-.img2{
+.arrow{
     position: absolute;
     z-index: 1;
     top:50%;
@@ -332,6 +350,7 @@ input#button1:active {
     flex: 1;
     height: 400px;
     position: relative;
+    z-index: 10;
 }
 
 .table{
@@ -380,6 +399,102 @@ input#button1:active {
     padding: 12px 0;
     font-weight: 500;
 }
+/*当输入为title或者时video_url时，结果样式*/
 
+.vertical-middle{
+
+    width: 10%;
+    height: 200px;
+    margin: 0 auto;
+    position: relative;
+}
+.arrowunder{
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-top: -70px;
+    margin-left: -25px;
+}
+.vertical-buttom{
+    width: 100%;
+    height: 400px;
+    position: relative;
+}
+.table1{
+    position: absolute;
+    text-align: center;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px 3px #ede9f3;
+    top:50%;
+    left: 50%;
+    margin-left: -140px;
+    margin-top: -120px;
+}
+.table-header1{
+        height: 80px;
+        width: 280px;
+        position: relative;
+        background-color: #bbc0ce;
+    }
+.table-title1{
+        position: absolute;
+        width: 60px;
+        height: 20px;
+        top:50%;
+        left: 50%;
+        margin-top:-10px;
+        margin-left:-30px;
+        font-size:25px;
+    }
+.table-content-holder1{
+        padding: 0 10%;
+        margin-bottom: 40px;
+    }
+.table1 ul
+    {
+        padding: 0;
+        list-style: none;
+        margin-top: 25px;
+    }
+.table1 ul li
+    {
+        border-bottom: 2px solid #ede9f3;
+        padding: 12px 0;
+        font-weight: 500;
+    }
+/*模态框样式*/
+
+.modalicon{
+     position: fixed;
+     width: 4%;
+     height: 8%;
+     right: 0.5%;
+     z-index: 110;
+     top:38%;
+}
+.distitle{
+    height: 115px;
+    background-color: #87CEFA;
+    color: #ffffff;
+    text-align: center;
+    font-size: 27px;
+    line-height: 115px;
+}
+.dis{
+     height: 185px;
+     text-align: center;
+     line-height: 185px;
+     font-size: 30px;
+     color: #696969;
+}
+/*页脚装饰*/
+.horizontalline{
+    position: fixed;
+    top: 90%;
+    right: 5%;
+
+}
 </style>
 
