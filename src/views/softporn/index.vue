@@ -133,27 +133,27 @@
                     this.title_value = true;
                     this.img_value = true;
                     this.video_value = true;
-                }else if(title&img_url){
+                }else if(title&img_url&!video_url){
                     this.title_value = true;
                     this.img_value = true;
                     this.video_value = false;
-                }else if(img_url&video_url){
+                }else if(!title&img_url&video_url){
                     this.title_value = false;
                     this.img_value = true;
                     this.video_value = true;
-                }else if(title&video_url){
+                }else if(title&!img_url&video_url){
                     this.title_value = true;
                     this.img_value = false;
                     this.video_value = true;
-                }else if(title){
+                }else if(title&!img_url&!video_url){
                     this.title_value = true;
                     this.img_value = false;
                     this.video_value = false;
-                }else if(img_url){
+                }else if(!title&img_url&!video_url){
                     this.title_value = false;
                     this.img_value = true;
                     this.video_value = false;
-                }else if(video_url){
+                }else if(!title&!img_url&video_url){
                     this.title_value = false;
                     this.img_value = false;
                     this.video_value = true;
@@ -360,10 +360,11 @@ input#button1:active {
 }
 .left{
     width: 53%;
+    background-color: #055198;
 }
 .left_title{
     width: auto;
-    height: 80px;
+    height: 100px;
     position: relative;
 }
 .input_title{
