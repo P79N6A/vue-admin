@@ -57,7 +57,8 @@ export const constantRouterMap = [
         name: 'Demo',
         component: () => import('@/views/demo/index'),
         meta: { title: '标签', icon: 'example' }
-      }
+      },
+      
     ]
   },
 

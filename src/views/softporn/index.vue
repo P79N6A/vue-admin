@@ -5,19 +5,21 @@
         <!--输入框部分-->
         <form class="content">
 			<span class="input input--isao">
-					<input class="input__field input__field--isao" type="text" id="input-38" name ="title" v-model="title"/>
+                <!--数据双向绑定使用v-model.lazy="title"，转变为使用change事件进行同步-->
+                <!--数据双向绑定使用v-model.trim="title"，自动过滤用户输入的首尾空白字符-->
+					<input class="input__field input__field--isao" type="text" id="input-38" name ="title" v-model.lazy.trim="title"/>
 					<label class="input__label input__label--isao" for="input-38" data-content="title" >
 						<span class="input__label-content input__label-content--isao">title</span>
 					</label>
 			</span>
             <span class="input input--isao">
-					<input class="input__field input__field--isao" type="text" id="input-39" name = 'img_url' v-model="img_url"/>
+					<input class="input__field input__field--isao" type="text" id="input-39" name = 'img_url' v-model.lazy.trim="img_url"/>
 					<label class="input__label input__label--isao" for="input-39" data-content="img_url" >
 						<span class="input__label-content input__label-content--isao">img_url</span>
 					</label>
             </span>
             <span class="input input--isao">
-					<input class="input__field input__field--isao" type="text" id="input-40" name = 'url' v-model="video_url"/>
+					<input class="input__field input__field--isao" type="text" id="input-40" name = 'url' v-model.lazy.trim="video_url"/>
 					<label class="input__label input__label--isao" for="input-39" data-content="video_url" >
 						<span class="input__label-content input__label-content--isao">video_url</span>
 					</label>
@@ -30,13 +32,20 @@
             <!--左边div包括title，图片以及video展示-->
             <div class="left">
                 <div class="left_title" v-show="title_value">
-                    <div class="input_title">title:XXXXXXXXXXXXXXXX</div>
+                    <div class="input_title">title:{{title}}</div>
                 </div>
+                <!--图片设置preview="0"用于使用vue-photo-preview插件-->
                 <div class="left_img" v-show="img_value">
-                <img src = "@/assets/img/1.jpg" class="img1">
+                <img :src="img_src" preview="0" class="img1" >
                 </div>
                 <div class="left_video" v-show="video_value">
-                    这里是video
+                    <div class="show_video">
+                        <video-player  class="video-player vjs-custom-skin"
+                                       ref="videoPlayer"
+                                       :playsinline="true"
+                                       :options="playerOptions"
+                        ></video-player>
+                    </div>
                 </div>
             </div>
             <div class="middle" v-show="arrow_value">
@@ -49,8 +58,9 @@
                     </div>
                     <div class="table-content-holder">
                         <ul>
-                            <li>score:0.9</li>
-                            <li>label:view</li>
+                            <li v-for="(value,name) in object">
+                                {{name}}:{{value}}
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -87,11 +97,41 @@
                     //添加背景图片
                     backgroundImage: "url(" + require("@/assets/img/bg2.jpg") + ") ",
                 },
+                //图片url
+                img_src:'',
+                //结果数据
+                object:{ },
+                //给条件渲染赋初始值
                 title_value:false,
                 img_value:false,
                 video_value:false,
                 arrow_value:false,
-                table_value:false
+                table_value:false,
+
+                // 视频播放
+                playerOptions : {
+                    playbackRates : [ 0.5, 1.0, 1.5, 2.0 ], //可选择的播放速度
+                    autoplay : false, //如果true,浏览器准备好时开始回放。
+                    muted : false, // 默认情况下将会消除任何音频。
+                    loop : false, // 视频一结束就重新开始。
+                    preload : 'auto', // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
+                    language : 'zh-CN',
+                    aspectRatio : '16:9', // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
+                    fluid : true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
+                    sources : [ {
+                        type : "",
+                        src : ''//url地址
+                    } ],
+                    poster : "", //封面地址
+                    // width: document.documentElement.clientWidth,
+                    notSupportedMessage : '此视频暂无法播放，请稍后再试', //允许覆盖Video.js无法播放媒体源时显示的默认信息。
+                    controlBar : {
+                        timeDivider : true,//当前时间和持续时间的分隔符
+                        durationDisplay : true,//显示持续时间
+                        remainingTimeDisplay : false,//是否显示剩余时间功能
+                        fullscreenToggle : true  //全屏按钮
+                    }
+                }
             }
         },
         methods:{
@@ -99,20 +139,22 @@
             showAlert(){
                 this.$swal('请输入至少一项！');
             },
-            //弹出模态框方法
+            showvideoAlert(){
+              this.$swal('video_url格式错误，请输入正确的格式');
+            },
+            //弹出模态框
             show(){
                 this.$modal.show('description');
             },
-            //隐藏模态框方法
+            //隐藏模态框
             hide(){
                 this.$modal.hide('description');
             },
+            //点击提交按钮
             submitForm(e){
                 var title = this.title;
                 var img_url = this.img_url;
                 var video_url = this.video_url;
-
-
                 // 阻止页面刷新,取消默认行为
                 e.preventDefault();
 
@@ -121,48 +163,88 @@
                     this.showAlert();
                     return false;
                 }
+                //如果video_url不含'cdn-proxy.qiyi.domain'，显示警告
+                if(video_url&&!(video_url.includes('cdn-proxy.qiyi.domain'))){
+                    this.showvideoAlert();
+                    return false;
+                }
 
                 console.log(title);
                 console.log(img_url);
                 console.log(video_url);
 
+                // 显示loading动画
+                let loader = this.$loading.show({
+                    // 动画参数配置
+                    loader:'dots',
+                    width:150,
+                    height:100,
+                    color:'#70be42',
+                    opacity:0.6,
+                });
+
 //                判断输入哪些内容，渲染不同的效果
                 this.arrow_value = true;
                 this.table_value = true;
-                if (title&img_url&video_url){
+                if (title&&img_url&&video_url){
                     this.title_value = true;
                     this.img_value = true;
                     this.video_value = true;
-                }else if(title&img_url&!video_url){
+                }else if(title&&img_url&&!video_url){
                     this.title_value = true;
                     this.img_value = true;
                     this.video_value = false;
-                }else if(!title&img_url&video_url){
+                }else if(!title&&img_url&&video_url){
                     this.title_value = false;
                     this.img_value = true;
                     this.video_value = true;
-                }else if(title&!img_url&video_url){
+                }else if(title&&!img_url&&video_url){
                     this.title_value = true;
                     this.img_value = false;
                     this.video_value = true;
-                }else if(title&!img_url&!video_url){
+                }else if(title&&!img_url&&!video_url){
                     this.title_value = true;
                     this.img_value = false;
                     this.video_value = false;
-                }else if(!title&img_url&!video_url){
+                }else if(!title&&img_url&&!video_url){
                     this.title_value = false;
                     this.img_value = true;
                     this.video_value = false;
-                }else if(!title&!img_url&video_url){
+                }else if(!title&&!img_url&&video_url){
                     this.title_value = false;
                     this.img_value = false;
                     this.video_value = true;
                 }
 
-                //点击提交按钮之后，清空输入框数据
-//                this.title = " ";
-//                this.img_url = " ";
-//                this.video_url = " "
+                //将表单提交的img_url绑定到img_src属性上
+                this.img_src = img_url;
+
+                //将表单提交的video_url绑定到视频的src内
+                this.playerOptions.sources[0].src = video_url;
+
+
+                //发送post请求，将返回的数据赋值给object对象
+                this.$axios.post('http://homepage-backed.online.qiyi.qae/vulgar', {
+                    user:{
+                      username:'vulgar-test',
+                      password:123
+                    },
+                    title: title,
+                    img_url: img_url.split(),
+                    video_url:video_url.split()
+                })
+                    .then((res) => {
+                        //将返回的数据放入object内，并且隐藏loading动画
+                        console.log(res.data.data.tags[0]);
+                        this.object = res.data.data.tags[0];
+                        loader.hide();
+
+                    })
+                    .catch(()=>{
+                        this.object = {'result':'error!'};
+                        loader.hide();
+                    });
+
             }
         }
     }
@@ -357,9 +439,11 @@ input#button1:active {
 /*结果显示部分样式，最右边div宽度自适应，整个div高度自适应*/
 .father{
     display: flex;
+    margin-top: 60px;
+    margin-bottom: 40px;
 }
 .left{
-    width: 53%;
+    width: 52%;
     background-color: #055198;
 }
 .left_title{
@@ -399,13 +483,22 @@ input#button1:active {
     top:50%;
     left:50%;
     margin-left: -275px;
-    margin-top: -175px;
+    margin-top: -165px;
 
 }
 .left_video{
     width: auto;
-    height: 600px;
-    background-color: #7f7f7f;
+    height: 349px;
+    position: relative;
+}
+.show_video{
+    position: absolute;
+    width: 550px;
+    background-color: #00D1B2;
+    top:50%;
+    left: 50%;
+    margin-top: -155px;
+    margin-left: -275px;
 }
 
 .middle{
@@ -435,30 +528,31 @@ input#button1:active {
     box-shadow: 0px 0px 10px 3px #ede9f3;
     top:50%;
     left: 50%;
-    margin-left: -140px;
-    margin-top: -120px;
+    margin-left: -230px;
+    margin-top: -130px;
     z-index: 100;
 }
 
 
 .table-header{
     height: 80px;
-    width: 280px;
+    width: 385px;
     position: relative;
     background-color: #bbc0ce;
 }
 .table-title{
     position: absolute;
-    width: 60px;
-    height: 20px;
+    width: 80px;
+    height: 40px;
     top:50%;
     left: 50%;
-    margin-top:-10px;
-    margin-left:-30px;
-    font-size:25px;
+    margin-top:-20px;
+    margin-left:-40px;
+    font-size:35px;
+    text-align: center;
 }
 .table-content-holder{
-    padding: 0 10%;
+    padding: 0 8%;
     margin-bottom: 40px;
 }
 .table ul
@@ -469,9 +563,16 @@ input#button1:active {
 }
 .table ul li
 {
-    border-bottom: 2px solid #ede9f3;
-    padding: 12px 0;
+    border-bottom: 3px solid #ede9f3;
+    padding: 15px 0;
     font-weight: 500;
+    font-size: 20px;
+/*
+    强制不换行
+*/
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
 }
 
 /*模态框样式*/
