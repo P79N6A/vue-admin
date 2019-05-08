@@ -1,7 +1,7 @@
 <template>
-<div>
-    标签
-</div>
+    <div>
+        小视频类型
+    </div>
 </template>
 
 <script>

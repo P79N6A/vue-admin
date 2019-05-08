@@ -8,23 +8,23 @@
                 <!--数据双向绑定使用v-model.lazy="title"，转变为使用change事件进行同步-->
                 <!--数据双向绑定使用v-model.trim="title"，自动过滤用户输入的首尾空白字符-->
 					<input class="input__field input__field--isao" type="text" id="input-38" name ="title" v-model.lazy.trim="title"/>
-					<label class="input__label input__label--isao" for="input-38" data-content="title" >
-						<span class="input__label-content input__label-content--isao">title</span>
+					<label class="input__label input__label--isao" for="input-38" data-content="视频标题" >
+						<span class="input__label-content input__label-content--isao">视频标题</span>
 					</label>
 			</span>
             <span class="input input--isao">
 					<input class="input__field input__field--isao" type="text" id="input-39" name = 'img_url' v-model.lazy.trim="img_url"/>
-					<label class="input__label input__label--isao" for="input-39" data-content="img_url" >
-						<span class="input__label-content input__label-content--isao">img_url</span>
+					<label class="input__label input__label--isao" for="input-39" data-content="视频封面地址（url）" >
+						<span class="input__label-content input__label-content--isao">视频封面地址（url）</span>
 					</label>
             </span>
             <span class="input input--isao">
 					<input class="input__field input__field--isao" type="text" id="input-40" name = 'url' v-model.lazy.trim="video_url"/>
-					<label class="input__label input__label--isao" for="input-39" data-content="video_url" >
-						<span class="input__label-content input__label-content--isao">video_url</span>
+					<label class="input__label input__label--isao" for="input-39" data-content="视频地址（url）" >
+						<span class="input__label-content input__label-content--isao">视频地址（url）</span>
 					</label>
             </span>
-            <input type="submit" id="button1" value="提交" @click="submitForm"/>
+            <input type="submit" id="button1" value="软色情识别" @click="submitForm"/>
         </form>
 
         <!--结果显示部分-->
@@ -32,7 +32,7 @@
             <!--左边div包括title，图片以及video展示-->
             <div class="left">
                 <div class="left_title" v-show="title_value">
-                    <div class="input_title">title:{{title}}</div>
+                    <div class="input_title">视频标题:{{title}}</div>
                 </div>
                 <!--图片设置preview="0"用于使用vue-photo-preview插件-->
                 <div class="left_img" v-show="img_value">
@@ -54,7 +54,7 @@
             <div class="right" v-show="table_value">
                 <div class="table">
                     <div class="table-header">
-                        <div class="table-title">result</div>
+                        <div class="table-title">结果</div>
                     </div>
                     <div class="table-content-holder">
                         <ul>
@@ -69,7 +69,8 @@
         <!--模态框部分-->
         <!--问号图标-->
         <div class="modalicon" @click="show">
-            <i class="el-icon-question" style="font-size: 57px;color: #87CEFA;"></i>
+            <i class="el-icon-question" style="font-size: 69px;color: #87CEFA;"></i>
+            <div style="background-color: lightskyblue;width: 70px;height: 25px;text-align: center;line-height:25px;font-size: 16px;font-weight: bolder">识别说明</div>
         </div>
         <!--定义模态框内容-->
         <modal name="description" :draggable="true" :adaptive="true">
@@ -77,8 +78,20 @@
             <div slot="top-right">
                 <i class="el-icon-error" style="font-size: 60px;color:#FF0000;" @click="hide"></i>
             </div>
-            <div class="distitle">输入说明</div>
-            <div class="dis">请输入title、img_url以及video_url至少一项</div>
+            <div class="distitle">软色情识别说明</div>
+            <div class="dis">
+                <ul>
+                    <li>
+                        请输入至少一项
+                    </li>
+                    <li>
+                        若输入为一项，结果为单项识别结果
+                    </li>
+                    <li>
+                        若输入为两项或者三项，结果为综合识别结果
+                    </li>
+                </ul>
+            </div>
         </modal>
         <!--页脚装饰部分-->
         <div class="horizontalline"><img src="@/assets/img/horizontalline.png"></div>
@@ -234,14 +247,28 @@
                     video_url:video_url.split()
                 })
                     .then((res) => {
-                        //将返回的数据放入object内，并且隐藏loading动画
-                        console.log(res.data.data.tags[0]);
-                        this.object = res.data.data.tags[0];
+                        //将返回的数据处理之后放入object内，并且隐藏loading动画
+                        let result = res.data.data.tags[0];
+                        console.log(result);
+                        //将结果的小数转换成百分数并且只保留一位小数
+                        if(result.tag == 'PORN'){
+                            result.score = Number(result.score*100).toFixed(1)+'%';
+                        }else {
+                            result.score = Number((1-result.score)*100).toFixed(1)+'%';
+                        }
+
+                        //全局替换数据的属性值，先将json转换为字符串，再转回json
+                        let result1 = JSON.parse(JSON.stringify(result).replace(/tag/g,"识别结果"));
+                        let result2 = JSON.parse(JSON.stringify(result1).replace(/NORMAL/g,"非软色情"));
+                        let result3 = JSON.parse(JSON.stringify(result2).replace(/PORN/g,"软色情"));
+                        let result4 = JSON.parse(JSON.stringify(result3).replace(/score/g,"可信度"));
+                        this.object = result4;
+                        console.log(result4);
                         loader.hide();
 
                     })
                     .catch(()=>{
-                        this.object = {'result':'error!'};
+                        this.object = {'识别结果':'出错啦！！！'};
                         loader.hide();
                     });
 
@@ -425,7 +452,8 @@ input#button1 {
     font-family:'AirstreamRegular', Georgia, 'Times New Roman', serif;
     color:#e5edff;
     text-shadow:0px 0px 5px rgba(0, 0, 0, 0.75);
-    font-size:30px;
+    font-size:25px;
+    margin-top: 40px;
 }
 input#button1:hover, input#button1:focus {
     border-color:#adbad9;
@@ -458,7 +486,7 @@ input#button1:active {
     background-color: #d4dfe6;
     color: #121647;
     text-align: center;
-    font-size: 25px;
+    font-size: 22px;
     font-weight: 600;
     line-height: 60px;
     top:50%;
@@ -528,7 +556,7 @@ input#button1:active {
     box-shadow: 0px 0px 10px 3px #ede9f3;
     top:50%;
     left: 50%;
-    margin-left: -230px;
+    margin-left: -225px;
     margin-top: -130px;
     z-index: 100;
 }
@@ -536,20 +564,21 @@ input#button1:active {
 
 .table-header{
     height: 80px;
-    width: 385px;
+    width: 380px;
     position: relative;
     background-color: #bbc0ce;
 }
 .table-title{
     position: absolute;
-    width: 80px;
-    height: 40px;
+    width: 100px;
+    height: 44px;
     top:50%;
     left: 50%;
-    margin-top:-20px;
-    margin-left:-40px;
-    font-size:35px;
+    margin-top:-21px;
+    margin-left:-50px;
+    font-size:38px;
     text-align: center;
+    line-height: 44px;
 }
 .table-content-holder{
     padding: 0 8%;
@@ -559,14 +588,15 @@ input#button1:active {
 {
     padding: 0;
     list-style: none;
-    margin-top: 25px;
+    margin-top: 22px;
 }
 .table ul li
 {
     border-bottom: 3px solid #ede9f3;
-    padding: 15px 0;
-    font-weight: 500;
-    font-size: 20px;
+    padding: 14px 0;
+    font-weight: bold;
+    font-size: 24px;
+    color: #055198;
 /*
     强制不换行
 */
@@ -578,26 +608,30 @@ input#button1:active {
 /*模态框样式*/
 .modalicon{
     position: fixed;
-    width: 4%;
-    height: 8%;
-    right: 0.5%;
-    z-index: 110;
+    right: 0.8%;
     top:38%;
+
 }
 .distitle{
     height: 115px;
     background-color: #87CEFA;
     color: #ffffff;
     text-align: center;
-    font-size: 27px;
+    font-size: 30px;
     line-height: 115px;
 }
 .dis{
     height: 185px;
     text-align: center;
-    line-height: 185px;
-    font-size: 25px;
     color: #696969;
+}
+.dis ul li
+{
+    border-bottom: 3px dashed #D3D3D3;
+    padding: 10px 0;
+    font-weight: 500;
+    font-size: 24px;
+
 }
 /*页脚装饰*/
 .horizontalline{

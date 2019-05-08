@@ -49,15 +49,25 @@ export const constantRouterMap = [
 
 
   {
-    path: '/demo',
+    path: '/label',
     component: Layout,
+      redirect: '/label/shortvideo',
+      name: 'Label',
+      meta: { title: '标签', icon: 'example' },
     children: [
       {
-        path: '/hello',
-        name: 'Demo',
-        component: () => import('@/views/demo/index'),
-        meta: { title: '标签', icon: 'example' }
+        path: 'shortvideo',
+        name: 'Shortvideo',
+        component: () => import('@/views/shortvideo/index'),
+        meta: { title: '短视频类型', icon: 'nested' }
       },
+        {
+            path: 'smallvideo',
+            name: 'Smallvideo',
+            component: () => import('@/views/smallvideo/index'),
+            meta: { title: '小视频类型和内容', icon: 'nested' }
+        }
+        
       
     ]
   },
