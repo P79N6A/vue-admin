@@ -28,9 +28,47 @@ app.all('*', function (req, res, next) {
 //响应post请求
 app.post('/submit', function (req, res) {
     console.log(req.body);
-    res.json({tags:[{tag:'normal',score:0.8}]});// 向前端发送数据
+    res.json({tags:[
+        {id:'1001',
+         tag:'体育',
+         weight:1,
+         confidence:0.1111,
+         category_tag_level:1
+         },
+        {id:'1002',
+         tag:'语文',
+         weight:2,
+         confidence:0.2222,
+         category_tag_level:2
+         },
+        {id:'1003',
+        tag:'数学',
+        weight:3,
+        confidence:0.3333,
+        category_tag_level:3
+        },
+        {id:'1004',
+        tag:'英语',
+        weight:4,
+        confidence:0.4444,
+        category_tag_level:4
+        },
+        {id:'1005',
+        tag:'物理',
+        weight:5,
+        confidence:0.5555,
+        category_tag_level:5
+        },
+        {id:'1006',
+        tag:'化学',
+        weight:6,
+        confidence:0.6666,
+        category_tag_level:6
+        },
+        ]
+    });// 向前端发送数据
     
-})
+});
 
 app.listen(8085, function () {
     console.log('success listen...8085');

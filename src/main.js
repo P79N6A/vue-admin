@@ -13,25 +13,25 @@ import store from './store'
 import router from './router'
 
 import '@/icons' // icon
-//引入vue-sweetalert2提示框
+//引入vue-sweetalert2提示框模块
 import VueSweetalert2 from 'vue-sweetalert2';
 const options = {
     confirmButtonColor: '#87CEFA',
     cancelButtonColor: '#ff7674'
 }
-//引入vue-js-modal模态框
+//引入vue-js-modal模态框模块
 import VModal from  'vue-js-modal'
 
-//引入vue-video-player插件，播放视频
+//引入vue-video-player模块，播放视频
 import VideoPlayer from 'vue-video-player'
 require('video.js/dist/video-js.css')
 require('vue-video-player/src/custom-theme.css')
 
-//引入vue-photo-preview插件，点击图片可查看原图
+//引入vue-photo-preview模块，点击图片可查看原图
 import Preview from 'vue-photo-preview'
 import 'vue-photo-preview/dist/skin.css'
 
-//引入vue-loading-overlay插件，过渡加载动画
+//引入vue-loading-overlay模块，过渡加载动画
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 /**

@@ -172,7 +172,7 @@
                 e.preventDefault();
 
                 //如果表单数据均为空时，显示警告
-                if(((!title)&(!img_url)&(!video_url))){
+                if(((!title)&&(!img_url)&&(!video_url))){
                     this.showAlert();
                     return false;
                 }
@@ -300,7 +300,7 @@ header{
     z-index: 1;
     display: inline-block;
     margin: 1em;
-    max-width: 370px;
+    max-width: 500px;
     width: 28%;
     vertical-align: top;
 }
@@ -473,6 +473,7 @@ input#button1:active {
 .left{
     width: 52%;
     background-color: #055198;
+    z-index: 10;
 }
 .left_title{
     width: auto;
@@ -530,7 +531,7 @@ input#button1:active {
 }
 
 .middle{
-    width: 18%;
+    width: 12%;
     position: relative;
 }
 .arrow{
@@ -538,7 +539,7 @@ input#button1:active {
     z-index: 1;
     top:50%;
     left: 50%;
-    margin-left: -100px;
+    margin-left: -50px;
     margin-top: -25px;
 }
 
@@ -556,8 +557,7 @@ input#button1:active {
     box-shadow: 0px 0px 10px 3px #ede9f3;
     top:50%;
     left: 50%;
-    margin-left: -225px;
-    margin-top: -130px;
+    transform: translateY(-50%) translateX(-50%);
     z-index: 100;
 }
 
